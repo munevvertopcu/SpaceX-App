@@ -1,10 +1,10 @@
 import React from 'react';
 import { Get } from '../controllers/httpController';
-import { UserContext } from '../contexts/UserContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 export function useGet(endpoint, initialValue) {
 
-    const { accessToken } = React.useContext(UserContext);
+    const { state } = React.useContext(AuthContext);
     const [data, setData] = React.useState(initialValue);
 
     React.useEffect(() => {
@@ -12,6 +12,6 @@ export function useGet(endpoint, initialValue) {
             .then((data) => {
                 setData(data)
             })
-    }, [accessToken, endpoint]);
+    }, [state.accessToken, endpoint]);
     return data;
 }

@@ -5,7 +5,7 @@ import { useGet } from '../../hooks/useGet';
 
 function Home() {
 
-    const data = useGet("feed")
+    const data = useGet("feed", [])
 
     return (
         <View style={styles.container}>
