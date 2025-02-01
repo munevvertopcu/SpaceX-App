@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create(
     {
+        container: {
+            width: '100%'
+        },
         inputContainer: {
             flexDirection: 'row',
             position: "relative",
@@ -21,6 +24,14 @@ export default StyleSheet.create(
             position: "absolute",
             right: 7,
             alignSelf: "center"
+        },
+        errorContainer: {
+            marginVertical: 5,
+            marginLeft: 5
+        },
+        errorText: {
+            color: 'red',
+            fontSize: 13
         }
     }
 )

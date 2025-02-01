@@ -2,25 +2,25 @@ import { useReducer, useEffect, useMemo } from 'react';
 import { Post } from '../controllers/httpController';
 import { SetAccessToken, GetAccessToken, RemoveUser } from '../controllers/secureStorageController';
 
+const authReducer = (state, action) => {
+    switch (action.type) {
+        case 'SIGN_IN':
+            return { ...state, accessToken: action.accessToken };
+        case 'SIGN_OUT':
+            return { ...state, accessToken: null };
+        case 'SET_LOADING':
+            return { ...state, loading: action.loading };
+        default:
+            return state;
+    }
+};
+
+const initialState = {
+    accessToken: null,
+    loading: true,
+};
+
 export function useAuth() {
-
-    const authReducer = (state, action) => {
-        switch (action.type) {
-            case 'SIGN_IN':
-                return { ...state, accessToken: action.accessToken };
-            case 'SIGN_OUT':
-                return { ...state, accessToken: null };
-            case 'SET_LOADING':
-                return { ...state, loading: action.loading };
-            default:
-                return state;
-        }
-    };
-
-    const initialState = {
-        accessToken: null,
-        loading: true,
-    };
 
     const [state, dispatch] = useReducer(authReducer, initialState);
 
