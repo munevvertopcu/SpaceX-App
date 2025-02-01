@@ -1,5 +1,5 @@
 import React, { useContext, useReducer, useCallback } from 'react';
-import { View, ImageBackground, Dimensions, Text, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
+import { View, ImageBackground, Dimensions, Text, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Spacex from '../../../assets/svgComponents/Spacex';
 import styles from './Login.style';
 import UserInput from '../../components/UserInput';
@@ -89,20 +89,22 @@ function Login(props) {
         </TouchableOpacity>
         <UserInput
           id="email"
-          initialValue=""
+          value={formState.inputValues.email}
           onChangeText={inputChangeHandler}
           placeholder='Your email'
           required
           errorText="please enter valid email"
+          isValid={formState.inputValidities.email}
         />
         <UserInput
           id="password"
-          initialValue=""
+          value={formState.inputValues.password}
           onChangeText={inputChangeHandler}
           placeholder='Your password'
           required
           minLength={5}
           errorText="please enter valid password"
+          isValid={formState.inputValidities.password}
         />
         <CommonButton title='Login' onPress={() => handleLogin()} />
         <CommonAlert alertVisible={messageAlertVisible} setAlertVisible={setMessageAlertVisible} />

@@ -1,52 +1,29 @@
-import React, { useReducer } from 'react';
+import React, { useState } from 'react';
 import { TextInput, View, Text } from 'react-native';
 import styles from './UserInput.style';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-const inputReducer = (state, action) => {
-    switch (action.type) {
-        case 'INPUT_CHANGE':
-            return {
-                ...state,
-                value: action.value,
-                isValid: action.isValid
-            };
-        case 'INPUT_BLUR':
-            return {
-                ...state,
-                touched: true
-            };
-        default:
-            return state;
-    }
-}
+function UserInput({ id, value, onChangeText, required, errorText, minLength, placeholder, isValid }) {
 
-function UserInput({ id, initialValue, onChangeText, required, errorText, minLength, placeholder }) {
-
-    const [inputState, dispatch] = useReducer(inputReducer, {
-        value: initialValue || '',
-        isValid: true,
-        touched: false
-    });
+    const [touched, setTouched] = useState(false);
 
     const textChangeHandler = (text) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        let isValid = true;
+        let valid = true;
         if (required && text.trim().length === 0) {
-            isValid = false;
+            valid = false;
         }
         if (id === "email" && !emailRegex.test(text)) {
-            isValid = false;
+            valid = false;
         }
         if (minLength !== null && text.length < minLength) {
-            isValid = false;
+            valid = false;
         }
-        dispatch({ type: 'INPUT_CHANGE', value: text, isValid });
-        onChangeText(id, text, isValid);
+        onChangeText(id, text, valid);
     };
 
     const lostFocusHandler = () => {
-        dispatch({ type: 'INPUT_BLUR' });
+        setTouched(true);
     };
 
     return (
@@ -54,7 +31,7 @@ function UserInput({ id, initialValue, onChangeText, required, errorText, minLen
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    value={inputState.value}
+                    value={value}
                     onChangeText={textChangeHandler}
                     placeholder={placeholder}
                     placeholderTextColor="#36445B"
@@ -66,11 +43,13 @@ function UserInput({ id, initialValue, onChangeText, required, errorText, minLen
                     size={24} color="#36445B"
                     style={styles.icon} />
             </View>
-            {!inputState.isValid && inputState.touched && (
-                <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{errorText}</Text>
-                </View>
-            )}
+            {
+                !isValid && touched && (
+                    <View style={styles.errorContainer}>
+                        <Text style={styles.errorText}>{errorText}</Text>
+                    </View>
+                )
+            }
         </View>
     )
 }
