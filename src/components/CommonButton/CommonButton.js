@@ -1,11 +1,15 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import styles from './CommonButton.style';
 
-function CommonButton({ title, onPress }) {
+function CommonButton({ title, onPress, loading }) {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
-            <Text style={styles.buttonText}>{title}</Text>
+            {
+                loading ?
+                    <ActivityIndicator color="white" /> :
+                    <Text style={styles.buttonText}>{title}</Text>
+            }
         </TouchableOpacity>
     )
 }

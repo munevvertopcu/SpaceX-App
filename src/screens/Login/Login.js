@@ -32,6 +32,7 @@ function Login(props) {
     visible: false,
     message: "",
   });
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -60,15 +61,24 @@ function Login(props) {
 
   const handleLogin = async () => {
     if (!formState.formIsValid) {
+      const emailOrPassEmpty = !formState.inputValues.email || !formState.inputValues.password
       return setMessageAlertVisible({
         visible: true,
-        message: "Error! Please enter a valid email and password."
+        message: emailOrPassEmpty ?
+          "E-mail or Password is empty!" :
+          "Error! Please enter a valid email and password."
       })
     };
     try {
+      setIsLoading(true);
       await login(formState.inputValues);
     } catch (error) {
-      console.log(error);
+      setMessageAlertVisible({
+        visible: true,
+        message: error.message
+      })
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -106,7 +116,7 @@ function Login(props) {
           errorText="please enter valid password"
           isValid={formState.inputValidities.password}
         />
-        <CommonButton title='Login' onPress={() => handleLogin()} />
+        <CommonButton title='Login' onPress={() => handleLogin()} loading={isLoading} />
         <CommonAlert alertVisible={messageAlertVisible} setAlertVisible={setMessageAlertVisible} />
       </ImageBackground>
     </KeyboardAvoidingView>

@@ -28,14 +28,16 @@ export const Post = async (url, data) => {
             // The server responded but returned an error code
             console.error('Error code:', error.response.status);
             console.error('Error data:', error.response.data);
+            throw error.response.data;
         } else if (error.request) {
             // No response was received from the server
             console.error('No response from server:', error.request);
+            throw new Error('No response from server. Please try again.');
         } else {
             // There was a problem with the request configuration
             console.error('There was a problem:', error.message);
+            throw error;
         }
-        throw error;
     }
 }
 
@@ -48,13 +50,15 @@ export const Get = async (url) => {
             // The server responded but returned an error code
             console.error('Error code:', error.response.status);
             console.error('Error data:', error.response.data);
+            throw error.response.data;
         } else if (error.request) {
             // No response was received from the server
             console.error('No response from server:', error.request);
+            throw new Error('No response from server. Please try again.');
         } else {
             // There was a problem with the request configuration
             console.error('There was a problem:', error.message);
+            throw error;
         }
-        throw error;
     }
 }
