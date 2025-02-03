@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, ImageBackground, Dimensions, Text, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Spacex from '../../../assets/svgComponents/Spacex';
 import styles from './Login.style';
@@ -32,14 +32,11 @@ function Login(props) {
 
   const deviceWidth = Dimensions.get("window").width;
 
-  const handleLogin = useCallback(async () => {
-    const { email, password } = formState.inputValues;
+  const handleLogin = async () => {
     if (!formState.formIsValid) {
       return setMessageAlertVisible({
         visible: true,
-        message: !email || !password ?
-          "E-mail or Password is empty!" :
-          "Error! Please enter a valid email and password."
+        message: "Error! Please enter a valid email and password."
       })
     };
     try {
@@ -53,7 +50,7 @@ function Login(props) {
     } finally {
       setIsLoading(false);
     }
-  }, [formState, login])
+  }
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
@@ -75,19 +72,14 @@ function Login(props) {
           value={formState.inputValues.email}
           onChangeText={inputChangeHandler}
           placeholder='Your email'
-          required
-          errorText="please enter valid email"
-          isValid={formState.inputValidities.email}
+          error={formState.inputErrors.email}
         />
         <UserInput
           id="password"
           value={formState.inputValues.password}
           onChangeText={inputChangeHandler}
           placeholder='Your password'
-          required
-          minLength={5}
-          errorText="please enter valid password"
-          isValid={formState.inputValidities.password}
+          error={formState.inputErrors.password}
         />
         <CommonButton title='Login' onPress={() => handleLogin()} loading={isLoading} />
         <CommonAlert alertVisible={messageAlertVisible} setAlertVisible={setMessageAlertVisible} />

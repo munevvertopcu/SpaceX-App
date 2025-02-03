@@ -3,24 +3,9 @@ import { TextInput, View, Text } from 'react-native';
 import styles from './UserInput.style';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-function UserInput({ id, value, onChangeText, required, errorText, minLength, placeholder, isValid }) {
+function UserInput({ id, value, onChangeText, error, placeholder }) {
 
     const [touched, setTouched] = useState(false);
-
-    const textChangeHandler = (text) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        let valid = true;
-        if (required && text.trim().length === 0) {
-            valid = false;
-        }
-        if (id === "email" && !emailRegex.test(text)) {
-            valid = false;
-        }
-        if (minLength && text.length < minLength) {
-            valid = false;
-        }
-        onChangeText(id, text, valid);
-    };
 
     const lostFocusHandler = () => {
         setTouched(true);
@@ -32,7 +17,7 @@ function UserInput({ id, value, onChangeText, required, errorText, minLength, pl
                 <TextInput
                     style={styles.input}
                     value={value}
-                    onChangeText={textChangeHandler}
+                    onChangeText={(text) => onChangeText(id, text)}
                     placeholder={placeholder}
                     placeholderTextColor="#36445B"
                     secureTextEntry={id.includes("password")}
@@ -44,9 +29,9 @@ function UserInput({ id, value, onChangeText, required, errorText, minLength, pl
                     style={styles.icon} />
             </View>
             {
-                !isValid && touched && (
+                error && touched && (
                     <View style={styles.errorContainer}>
-                        <Text style={styles.errorText}>{errorText}</Text>
+                        <Text style={styles.errorText}>{error}</Text>
                     </View>
                 )
             }

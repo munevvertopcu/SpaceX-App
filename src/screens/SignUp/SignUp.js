@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, Dimensions, ImageBackground, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import styles from './SignUp.style';
 import Spacex from '../../../assets/svgComponents/Spacex';
@@ -34,22 +34,13 @@ function SignUp(props) {
 
     const deviceWidth = Dimensions.get("window").width;
 
-    const handleRegister = useCallback(async () => {
-        const { email, password, passwordAgain } = formState.inputValues;
+    const handleRegister = async () => {
         if (!formState.formIsValid) {
             return setMessageAlertVisible({
                 visible: true,
-                message: !email || !password || !passwordAgain ?
-                    "E-mail or Password is empty!" :
-                    "Error! Please enter a valid email and password."
+                message: "Error! Please enter a valid email and password."
             });
         };
-        if (password !== passwordAgain) {
-            return setMessageAlertVisible({
-                visible: true,
-                message: "Passwords do not match"
-            });
-        }
         try {
             setIsLoading(true);
             await register(formState.inputValues);
@@ -61,7 +52,7 @@ function SignUp(props) {
         } finally {
             setIsLoading(false);
         }
-    }, [formState, register])
+    }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
@@ -84,29 +75,21 @@ function SignUp(props) {
                     value={formState.inputValues.email}
                     onChangeText={inputChangeHandler}
                     placeholder='Your email'
-                    required
-                    errorText="please enter valid email"
-                    isValid={formState.inputValidities.email}
+                    error={formState.inputErrors.email}
                 />
                 <UserInput
                     id='password'
                     value={formState.inputValues.password}
                     onChangeText={inputChangeHandler}
                     placeholder='Your password'
-                    required
-                    minLength={5}
-                    errorText="please enter valid password"
-                    isValid={formState.inputValidities.password}
+                    error={formState.inputErrors.password}
                 />
                 <UserInput
                     id='passwordAgain'
                     value={formState.inputValues.passwordAgain}
                     onChangeText={inputChangeHandler}
                     placeholder='Your password'
-                    required
-                    minLength={5}
-                    errorText="please enter valid password"
-                    isValid={formState.inputValidities.passwordAgain}
+                    error={formState.inputErrors.passwordAgain}
                 />
                 <CommonButton title='Create your account' onPress={handleRegister} loading={isLoading} />
             </ImageBackground>
