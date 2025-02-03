@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { View, ImageBackground, Dimensions, Text, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Spacex from '../../../assets/svgComponents/Spacex';
 import styles from './Login.style';
@@ -6,35 +6,17 @@ import UserInput from '../../components/UserInput';
 import CommonButton from '../../components/CommonButton';
 import { AuthContext } from '../../contexts/AuthContext';
 import CommonAlert from '../../components/CommonAlert';
-
-const formReducer = (state, action) => {
-
-  switch (action.type) {
-    case 'FORM_INPUT_UPDATE':
-      const { input, value, isValid } = action;
-      return {
-        ...state,
-        inputValues: { ...state.inputValues, [input]: value },
-        inputValidities: { ...state.inputValidities, [input]: isValid },
-        formIsValid: Object.values({
-          ...state.inputValidities,
-          [input]: isValid
-        }).every(Boolean)
-      };
-    default:
-      return state;
-  }
-};
+import { useForm } from '../../hooks/useForm';
 
 function Login(props) {
 
-  const [messageAlertVisible, setMessageAlertVisible] = React.useState({
+  const [messageAlertVisible, setMessageAlertVisible] = useState({
     visible: false,
     message: "",
   });
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [formState, dispatchFormState] = useReducer(formReducer, {
+  const { formState, inputChangeHandler } = useForm({
     inputValues: {
       email: '',
       password: ''
@@ -50,21 +32,12 @@ function Login(props) {
 
   const deviceWidth = Dimensions.get("window").width;
 
-  const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
-    dispatchFormState({
-      type: 'FORM_INPUT_UPDATE',
-      value: inputValue,
-      isValid: inputValidity,
-      input: inputIdentifier
-    });
-  }, []);
-
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
+    const { email, password } = formState.inputValues;
     if (!formState.formIsValid) {
-      const emailOrPassEmpty = !formState.inputValues.email || !formState.inputValues.password
       return setMessageAlertVisible({
         visible: true,
-        message: emailOrPassEmpty ?
+        message: !email || !password ?
           "E-mail or Password is empty!" :
           "Error! Please enter a valid email and password."
       })
@@ -80,7 +53,7 @@ function Login(props) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [formState, login])
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>

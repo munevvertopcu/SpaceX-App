@@ -6,6 +6,7 @@ import { useGet } from '../../hooks/useGet';
 function Home() {
 
     const data = useGet("auth/me", [])
+    console.log(data)
 
     return (
         <View style={styles.container}>

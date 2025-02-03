@@ -16,7 +16,7 @@ function UserInput({ id, value, onChangeText, required, errorText, minLength, pl
         if (id === "email" && !emailRegex.test(text)) {
             valid = false;
         }
-        if (minLength !== null && text.length < minLength) {
+        if (minLength && text.length < minLength) {
             valid = false;
         }
         onChangeText(id, text, valid);
@@ -35,11 +35,11 @@ function UserInput({ id, value, onChangeText, required, errorText, minLength, pl
                     onChangeText={textChangeHandler}
                     placeholder={placeholder}
                     placeholderTextColor="#36445B"
-                    secureTextEntry={id === 'password'}
+                    secureTextEntry={id.includes("password")}
                     onBlur={lostFocusHandler}
                 />
                 <MaterialCommunityIcons
-                    name={id === "password" ? "eye-off" : "email"}
+                    name={id.includes("password") ? "eye-off" : "email"}
                     size={24} color="#36445B"
                     style={styles.icon} />
             </View>

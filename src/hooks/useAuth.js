@@ -27,19 +27,27 @@ export function useAuth() {
     const login = async (data) => {
         const auth = { email: data.email, password: data.password };
         const response = await Post("auth/login", auth);
-        await SetAccessToken(response.token)
-        dispatch({ type: 'SIGN_IN', accessToken: response.token })
-    }
+        await SetAccessToken(response.token);
+        dispatch({ type: 'SIGN_IN', accessToken: response.token });
+    };
 
     const logout = async () => {
         await RemoveUser();
         dispatch({ type: 'SIGN_OUT' })
-    }
+    };
+
+    const register = async (data) => {
+        const auth = { email: data.email, password: data.password };
+        const response = await Post("auth/register", auth);
+        await SetAccessToken(response.token);
+        dispatch({ type: 'SIGN_IN', accessToken: response.token })
+    };
 
     const auth = useMemo(
         () => ({
             login,
-            logout
+            logout,
+            register
         }),
         []
     )
