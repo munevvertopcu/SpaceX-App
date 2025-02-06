@@ -49,8 +49,8 @@ export function useAuth() {
             logout,
             register
         }),
-        []
-    )
+        [] //auth nesnesi ilk renderda oluşuyor ve bir daha güncellenmiyor. login,register ve logout fonksiyonları güncel state'i zaten kendi içlerinde dispatch kullanarak güncelliyor.
+    );
 
     useEffect(() => {
         new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
@@ -58,6 +58,7 @@ export function useAuth() {
                 if (accessToken) {
                     dispatch({ type: 'SIGN_IN', accessToken: accessToken })
                 }
+                RemoveUser()
                 dispatch({ type: 'SET_LOADING', loading: false })
             })
         })

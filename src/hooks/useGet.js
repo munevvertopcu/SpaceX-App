@@ -1,10 +1,10 @@
 import React from 'react';
 import { Get } from '../controllers/httpController';
-import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 
 export function useGet(endpoint, initialValue) {
 
-    const { state } = React.useContext(AuthContext);
+    const state = React.useContext(UserContext);
     const [data, setData] = React.useState(initialValue);
 
     React.useEffect(() => {
