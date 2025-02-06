@@ -58,7 +58,6 @@ export function useAuth() {
                 if (accessToken) {
                     dispatch({ type: 'SIGN_IN', accessToken: accessToken })
                 }
-                RemoveUser()
                 dispatch({ type: 'SET_LOADING', loading: false })
             })
         })
