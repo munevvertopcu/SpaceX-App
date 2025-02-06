@@ -65,7 +65,7 @@ export const useForm = (initialState) => {
             value: inputValue,
             input: inputIdentifier,
         });
-    }, []);
+    }, []); //Dışarıdan herhangi bir değişkene bağlı olmadığı için deps.array boş
 
     return { formState, inputChangeHandler };
 }
