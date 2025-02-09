@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "title": "STARSHIP SUCCESSFUL LANDING",
+        "summary": "SpaceX's Starship completes another milestone with successful high-altitude test and landing. The spacecraft reached an altitude of 12.5km before executing a controlled descent.",
+        "date": "February 2, 2025",
+        "image": "https://images.unsplash.com/photo-1614728263952-84ea256f9679",
+        "category": "LAUNCHES"
+    },
+    {
+        "id": 2,
+        "title": "NEW DRAGON CAPSULE UNVEILED",
+        "summary": "SpaceX reveals next-generation Dragon spacecraft with enhanced cargo capacity and improved reusability features for future ISS missions.",
+        "date": "January 28, 2025",
+        "image": "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7",
+        "category": "DEVELOPMENT"
+    },
+    {
+        "id": 3,
+        "title": "SPACEX ANNOUNCES MARS MISSION UPDATE",
+        "summary": "Latest developments in the Mars colonization program revealed, including new life support systems and habitat designs for future Mars missions.",
+        "date": "January 15, 2025",
+        "image": "https://images.unsplash.com/photo-1596741964346-791466b552b6",
+        "category": "MISSIONS"
+    },
+    {
+        "id": 4,
+        "title": "STARLINK EXPANDS GLOBAL COVERAGE",
+        "summary": "SpaceX's internet constellation reaches new milestone with service now available in 75 countries, bringing high-speed internet to remote areas.",
+        "date": "January 5, 2025",
+        "image": "https://images.unsplash.com/photo-1614729375290-b2a429db839b",
+        "category": "STARLINK"
+    }
+]

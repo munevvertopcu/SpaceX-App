@@ -1,16 +1,41 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, ImageBackground } from 'react-native';
 import styles from './Home.style';
-import { useGet } from '../../hooks/useGet';
+import NewsList from '../../components/NewsList';
+import news_data from '../../data/news_data.json';
 
-function Home() {
+function Home({ navigation }) {
 
-    const data = useGet("auth/me", [])
-    console.log(data)
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        setList(news_data)
+    }, []);
+
+    const renderItem = ({ item }) => {
+        return (
+            <NewsList item={item} navigation={navigation} />
+        );
+    };
 
     return (
         <View style={styles.container}>
-            <Text>Home</Text>
+            <ImageBackground
+                source={{
+                    uri: 'https://images.unsplash.com/photo-1522760122564-d567dac67f45',
+                }}
+                style={styles.image}
+                resizeMode="stretch">
+                <Text style={styles.header}>Welcome to SpaceX</Text>
+            </ImageBackground>
+            <View style={styles.newsContainer}>
+                <Text style={styles.title}>LATEST NEWS</Text>
+                <FlatList
+                    keyExtractor={(item) => item.id.toString()}
+                    data={list}
+                    renderItem={renderItem}
+                />
+            </View>
         </View>
     );
 };
