@@ -2,14 +2,14 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 //screens
-import Schedule from '../screens/Schedule';
+import TopTabsScreen from './TopTabsNavigator';
 import HomeStackNavigator from './HomeStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
 const TAB_ICONS = {
     HomeStack: 'home',
-    Schedule: 'calendar-clear-sharp',
+    TopTabs: 'calendar-clear-sharp',
 };
 
 export default function TabNavigator() {
@@ -36,7 +36,7 @@ export default function TabNavigator() {
             })}
         >
             <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
-            <Tab.Screen name="Schedule" component={Schedule} />
+            <Tab.Screen name="TopTabs" component={TopTabsScreen} />
         </Tab.Navigator>
     );
 }
