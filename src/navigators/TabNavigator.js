@@ -4,12 +4,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 //screens
 import TopTabsScreen from './TopTabsNavigator';
 import HomeStackNavigator from './HomeStackNavigator';
+import Profile from '../screens/Profile';
 
 const Tab = createBottomTabNavigator();
 
 const TAB_ICONS = {
     HomeStack: 'home',
     TopTabs: 'calendar-clear-sharp',
+    Profile: 'person'
 };
 
 export default function TabNavigator() {
@@ -37,6 +39,7 @@ export default function TabNavigator() {
         >
             <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
             <Tab.Screen name="TopTabs" component={TopTabsScreen} />
+            <Tab.Screen name="Profile" component={Profile} />
         </Tab.Navigator>
     );
 }
