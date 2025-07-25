@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { TextInput, View, Text } from 'react-native';
 import styles from './UserInput.style';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -39,4 +39,4 @@ function UserInput({ id, value, onChangeText, error, placeholder }) {
     )
 }
 
-export default UserInput;
+export default memo(UserInput);
